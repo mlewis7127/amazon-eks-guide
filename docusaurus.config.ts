@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Amazon EKS Guide',
-  tagline: 'Beginners guide to Amazon EKS',
+  tagline: 'A beginners guide to Amazon EKS',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future

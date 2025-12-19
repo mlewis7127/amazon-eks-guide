@@ -11,32 +11,34 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Amazon EKS',
+    Svg: require('@site/static/img/amazon-eks.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Amazon Elastic Kubernetes Service (EKS) provides a fully managed 
+        Kubernetes service that eliminates the complexity of operating Kubernetes clusters
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'EKS Auto Mode',
+    Svg: require('@site/static/img/amazon-eks-auto-mode.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        With the Auto Mode feature, EKS extends its control to manage nodes on the data plane.
+        This includes automatically provisioning infrastructure, selecting optimal compute 
+        instances, dynamically scaling resources and more.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'EKS Capabilities',
+    Svg: require('@site/static/img/amazon-eks-capabilities.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Amazon EKS Capabilities is a layered set of fully managed cluster features that 
+        help accelerate developer velocity and offload the complexity of building and 
+        scaling with Kubernetes
       </>
     ),
   },

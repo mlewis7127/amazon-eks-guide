@@ -10,6 +10,12 @@ This guide provides an introduction to Amazon EKS. This page curates a list of r
 
 - [Amazon EKS Best Practices](https://docs.aws.amazon.com/eks/latest/best-practices/introduction.html) - The EKS Best Practices Guides. The primary goal of this project is to offer a set of best practices for day 2 operations for Amazon EKS.
 
+- [Choosing the right GitOps tool for your Amazon EKS cluster](https://docs.aws.amazon.com/prescriptive-guidance/latest/eks-gitops-tools/introduction.html) - This guide explores the key considerations in selecting GitOps tools for Amazon EKS, compares frequently used options, and provides insights to help you make an informed decision
+
+- [Scaling Amazon EKS infrastructure to optimize compute, workloads, and network performance](https://docs.aws.amazon.com/prescriptive-guidance/latest/scaling-amazon-eks-infrastructure/introduction.html) - This guide is designed to help organizations to optimize their Amazon EKS infrastructure across Compute Scaling, Workload Scaling, Network Scaling and Cost Optimisation.
+
+- [Best practices for streamlining Amazon EKS observability](https://docs.aws.amazon.com/prescriptive-guidance/latest/amazon-eks-observability-best-practices/introduction.html) - This guide is designed to help organizations optimize their Amazon EKS observability.
+
 
 
 ## 🎓 Amazon EKS Workshops
