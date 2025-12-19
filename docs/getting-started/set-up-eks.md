@@ -1,10 +1,10 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Setup Amazon EKS
 
-This section runs through the terraform configuration for deploying the Amazon EKS cluster using Auto Mode.
+This section runs through the terraform configuration used when deploying the Amazon EKS cluster using Auto Mode.
 
 The choice was made to use the community Terraform modules to create the VPC and EKS cluster, as this requires less code and uses built-in best practices. In this section we will run through exactly what gets created.
 

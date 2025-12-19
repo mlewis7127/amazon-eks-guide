@@ -1,10 +1,10 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # Set up Amazon VPC
 
-This section runs through the terraform configuration for deploying the Amazon VPC.
+This section runs through the terraform configuration used when deploying the Amazon VPC.
 
 The choice was made to use the community Terraform modules to create the VPC and EKS Auto Mode, as this requires less code and uses built-in best practices. In this section we will run through exactly what gets created.
 

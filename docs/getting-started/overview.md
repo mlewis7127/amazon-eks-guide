@@ -4,11 +4,13 @@ sidebar_position: 1
 
 # Overview
 
-This repository provides a simple introduction to Amazon EKS. The intention is to add code samples and demos to help explain the core features.
+This guide provides a simple introduction to Amazon EKS. The intention is to walk someone through standing up an Amazon EKS cluster in a custom VPC, whilst explaining all of the important features and capabilities.
+
+There is a separate code repository available for this guide which can be found at [EKS Guide Code](https://github.com/mlewis7127/amazon-eks-guide-code). The code repository should be cloned locally to make it easy to run through this guide.
 
 
 ## AWS Architecture
-The initial Terraform script sets up the following architecture in AWS:
+The initial Terraform scripts can be found in the `terraform` directory of the code repository. It sets up the following architecture in AWS:
 
 ![architecture diagram](../../static/img/amazon-eks-auto-mode.png)
 
@@ -47,6 +49,8 @@ terraform apply tfplan
 # Use the output from terraform apply, or replace with your values
 aws eks update-kubeconfig --name <cluster-name> --region <aws-region>
 ```
+
+This merges configuration in a local `~/.kube/config` file.
 
 ## Clean Up
 

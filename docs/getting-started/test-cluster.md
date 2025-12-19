@@ -1,18 +1,8 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 ---
 
-# Auto Mode Overview
-
-## Update kubectl
-Once the cluster is up and running, we can update our local Kubernetes client so that it can talk to the EKS cluster. The exact command to run will be output towards the bottom of the terminal after the 
-
-```bash
-# Replace with your cluster name and region
-aws eks update-kubeconfig --name cluster-name --region region
-```
-
-This merges configuration in a local `~/.kube/config` file.
+# Test EKS Cluster
 
 ## Testing the cluster
 
@@ -83,63 +73,6 @@ This should return the following:
 ```
 
 This tells us that the cluster has Auto Mode enabled and is using the default `general-purpose` node pool. From a Storage perspective, it tells us that the cluster can provision EBS volumes, without any need to manually install and manage the EBS CSI driver. From a Network perspective, it tells us the internal CIDR range for the cluster (which is separate from the VPC CIDR range), and it shows that load balancing is enabled.
-
-## Update Storage Class
-In the previous command we can see that the cluster can provision EBS volumes, so the next thing is to check what storage classes are available. A storage class tells the cluster details such as which type of storage service to use (e.g. EBS/EFS) and what volume type and/or performance settings.
-
-```bash
-kubectl get storageclass
-
-NAME   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
-gp2    kubernetes.io/aws-ebs   Delete          WaitForFirstConsumer   false                  126m
-```
-
-This shows us that the cluster has been provisioned using a legacy storage class. EKS Auto Mode does not create a StorageClass for you. You must create a StorageClass referencing `ebs.csi.eks.amazonaws.com` to use the storage capability of EKS Auto Mode. We could do this at cluster creation time in Terraform. However, Hashicorp guidance states "Single-apply workflows are not a reliable way of deploying Kubernetes infrastructure with Terraform. We strongly recommend separating the EKS Cluster from the Kubernetes resources. They should be deployed in separate runs, and recorded in separate state files." [Link](https://support.hashicorp.com/hc/en-us/articles/4408936406803-Kubernetes-Provider-block-fails-with-connect-connection-refused)
-
-Therefore, we will create a new `gp3` storage class which is available in `./k8s/1.storage-class/storage-class.yaml`. It creates a StorageClass named `auto-ebs-sc` that applications can reference when requesting storage. We also set this storage class as the default. We use a topology constrainty to restrict the volumes so they are only created in availability zones where Auto Mode can provision nodes. We also specify the modern EBS driver which is `ebs.csi.eks.amazonaws.com`. The `volumeBindingMode` of `WaitForFirstConsumer` delays volume creation until a pod needs it. We also mandate that the storage volume can be resized and must the gp3 storage type and be encrypted at rest.
-
-```yaml
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: auto-ebs-sc
-  annotations:
-    storageclass.kubernetes.io/is-default-class: "true"
-allowedTopologies:
-- matchLabelExpressions:
-  - key: eks.amazonaws.com/compute-type
-    values:
-    - auto
-provisioner: ebs.csi.eks.amazonaws.com
-volumeBindingMode: WaitForFirstConsumer
-allowVolumeExpansion: true
-parameters:
-  type: gp3
-  encrypted: "true"
-```
-
-We can navigate to the correct directory and run the following command to apply this configuration.
-
-```bash
-kubectl apply -f storage-class.yaml
-```
-
-And we will see that the storage class has been created.
-
-```bash
-storageclass.storage.k8s.io/auto-ebs-sc created
-```
-
-We will now see this appear when we view the storage classes available.
-
-```bash
-kubectl get storageclass
-NAME                    PROVISIONER                 RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
-auto-ebs-sc (default)   ebs.csi.eks.amazonaws.com   Delete          WaitForFirstConsumer   true                   60s
-gp2                     kubernetes.io/aws-ebs       Delete          WaitForFirstConsumer   false                  120m
-```
-
-As this is a new cluster, we can delete the `gp2` storage class by running `kubectl delete storageclass gp2` if we want too.
 
 ## Understanding the general-purpose node pool
 Amazon EKS node pools offer a flexible way to manage compute resources in your Kubernetes cluster. As already mentioned, Amazon EKS provides two built-in node pools - `system` and `general-purpose` - which you cannot modify, but you can enable or disable. With Karpenter's NodePool resource, you can define specific requirements for your compute resources, such as insance types and architectures.
