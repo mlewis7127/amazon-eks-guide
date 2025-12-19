@@ -4,12 +4,6 @@ sidebar_position: 3
 
 # Auto Mode Overview
 
-## Shared Responsibility Model
-With Amazon EKS Auto Mode, AWS take on far more of the heavy undifferentiated lifting, including all cluster capabilities for compute, storage and networking. It also includes manging the operating system, patching and more as shown in the updated shared responsibility model for Auto Mode.
-
-![Shared Responsibility Model](../../static/img/shared-responsibility-model.jpg)
-
-
 ## Update kubectl
 Once the cluster is up and running, we can update our local Kubernetes client so that it can talk to the EKS cluster. The exact command to run will be output towards the bottom of the terminal after the 
 
