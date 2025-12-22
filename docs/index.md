@@ -17,6 +17,12 @@ This guide provides an introduction to Amazon EKS. This page curates a list of r
 - [Best practices for streamlining Amazon EKS observability](https://docs.aws.amazon.com/prescriptive-guidance/latest/amazon-eks-observability-best-practices/introduction.html) - This guide is designed to help organizations optimize their Amazon EKS observability.
 
 
+## 📝 Amazon EKS Blog Posts
+
+- [Deep dive: Streamlining GitOps with Amazon EKS capability for Argo CD](https://aws.amazon.com/blogs/containers/deep-dive-streamlining-gitops-with-amazon-eks-capability-for-argo-cd/) - Explore advanced scenarios with Argo CD including hub-and-spoke multi-cluster deployments, native AWS service integrations, multi-tenancy implementation, scaling with advanced Argo CD configurations and integration with CI/CD pipeline
+
+- [Announcing Amazon EKS Capabilities for workload orchestration and cloud resource management](https://aws.amazon.com/blogs/aws/announcing-amazon-eks-capabilities-for-workload-orchestration-and-cloud-resource-management/) - Announcing Amazon Elastic Kubernetes Service (Amazon EKS) Capabilities, an extensible set of Kubernetes-native solutions that streamline workload orchestration, Amazon Web Services (AWS) cloud resource management, and Kubernetes resource composition and orchestration.
+
 
 ## 🎓 Amazon EKS Workshops
 
