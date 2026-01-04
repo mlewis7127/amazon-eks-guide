@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Set up Amazon VPC
+# Setup Amazon VPC
 
 This section runs through the terraform configuration used when deploying the Amazon VPC.
 

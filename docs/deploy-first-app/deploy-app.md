@@ -133,18 +133,15 @@ resources:
 
 You can only fit 5 pods max on the node, even though you may think there is 4 Gib available from the documentation.
 
-We can also see that the node has a single IP address (`10.1.4.100`).
-
-
-
-
-EKS Auto Mode defaults to using prefix delegation (/28 prefixes) for pod networking and maintains a predefined warm pool of IP resources that scales based on the number of scheduled pods. Auto Mode calculates max pods per node based on the number of ENIs and IPs supported per instance type (assuming the worst case of fragmentation).
+We can also see that the node has a pod capacity of 27 pods. Each pod has its own IP address, however, the node itself has a single IP address (`10.1.4.100`). So how does this work? This is because Pod IP's come from additional addressing resources attached to the node ENI's. Auto Mode calculates max pods per node based on the number of ENIs and IPs supported per instance type (assuming the worst case of fragmentation). If we run the following command for the `c6a.large` instance type:
 
 ```bash
 aws ec2 describe-instance-types \
   --instance-types c6a.large \
   --query "InstanceTypes[0].NetworkInfo.{MaxENIs:MaximumNetworkInterfaces,Ipv4PerENI:Ipv4AddressesPerInterface}"
 ```
+
+We see that there are 3 ENIs attached to the node, and each ENI can have 10 IPv4 addresses:
 
 ```json
 {
@@ -153,5 +150,4 @@ aws ec2 describe-instance-types \
 }
 ```
 
-
-
+On every ENI, one of these IP addresses is the ENI's primary IP, with 9 remaining IP addresses available as secondary IPs. The 9 secondary IP addresses multipled by the 3 ENIs gives us the 27 Pod capacity.
