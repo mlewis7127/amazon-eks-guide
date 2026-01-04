@@ -210,9 +210,56 @@ These have all been deployed on a single general purpose node.
 
 The node has an instance type of `c6a.large`. The `c` instance family type is one of the 3 instance family types supported by the `general-purpose` node pool as we saw in a previous section.
 
-Finally, we can see the capacity allocation on that node.
+## How many pods can I run on a node?
+A common question is how many pods you can actually run on a given node. With EKS Auto Mode this is less important as you no longer need to worry about pod density and Auto Mode will automatically provision nodes and select instance types. However, it's still interesting to understand how this is calculated.
+
+We can view the capacity allocation for a given EKS node in the AWS console.
 
 ![Node Capacity Allocation](../../static/img/first-app-capacity-allocation.png)
+
+This diagram shows capacity allocation across cores, memory and pods. We can get more information about the node by using the following command to describe it.
+
+```bash
+kubectl describe node i-0579304fc41fb401f
+
+...
+Addresses:
+  InternalIP:   10.1.4.110
+  InternalDNS:  ip-10-1-4-203.eu-west-2.compute.internal
+  Hostname:     ip-10-1-4-203.eu-west-2.compute.internal
+Capacity:
+  cpu:                2
+  ephemeral-storage:  81854Mi
+  hugepages-1Gi:      0
+  hugepages-2Mi:      0
+  memory:             3881108Ki
+  pods:               27
+Allocatable:
+  cpu:                1780m
+  ephemeral-storage:  76173383962
+  hugepages-1Gi:      0
+  hugepages-2Mi:      0
+  memory:             3136660Ki
+  pods:               27
+```
+
+If we look at the AWS documentation we can see the following details about `c6a.large` instance type.
+
+![c6a.large instance type](../../static/img/c6a-instance-type.png)
+
+The node has 2 vCPU capacity. However, we can see that only `1780m` is allocated or 1.78 CPU cores. This is because 220m (or 0.22 CPU cores) are reserved for things like Linux kernel and Bottlerocket OS processes.
+
+Although the node is documented as having 4.00 Gib of memory, there is only 3.7 Gib available and only 2.99 Gib of this is available to pods. This means that if you scheduled Pods with configuration such as:
+
+```yaml
+resources:
+  requests:
+    memory: 512Mi
+```
+
+You can only fit 5 pods max on the node, even though you may think there is 4 Gib available from the documentation.
+
+We can also see that the node has a single IP address (`10.1.4.100`).
 
 
 
@@ -236,7 +283,7 @@ aws ec2 describe-instance-types \
 
 
 
-### Clean up resources
+## Clean up resources
 To remove these resources you can simply delete the `game-2048` namespace, which will remove everything running inside that namespace, using the following command.
 
 ```bash
