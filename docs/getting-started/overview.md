@@ -4,7 +4,13 @@ sidebar_position: 1
 
 # Overview
 
-This guide provides a simple introduction to Amazon EKS. The intention is to walk someone through standing up an Amazon EKS cluster in a custom VPC, whilst explaining all of the important features and capabilities.
+The last few years have seen an ever growing adoption of Kubernetes at the enterprise layer.
+
+:::info
+Kubernetes adoption continues to grow, with 80% of organizations running it in production, up from 66% in 2023 - **CNCF 2024 Survey**
+:::
+
+As such, now is a great time to understand more about running Kubernetes on AWS with Amazon EKS (Elastic Kubernetes Service). This guide provides a simple introduction to Amazon EKS - a fully upstream and certified conformant and compliant version of Kubernetes. The intention is to walk someone through standing up an Amazon EKS cluster in a custom VPC, whilst explaining all of the important features and capabilities.
 
 There is a separate code repository available for this guide which can be found at [EKS Guide Code](https://github.com/mlewis7127/amazon-eks-guide-code). The code repository should be cloned locally to make it easy to run through this guide.
 

@@ -1,0 +1,95 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'CloudFormation template to create IAM Capability Role and EKS Capability for ArgoCD'
+
+Parameters:
+  ClusterName:
+    Type: String
+    Description: Name of the EKS cluster where ArgoCD capability will be deployed
+    MinLength: 1
+    MaxLength: 100
+  
+  CapabilityName:
+    Type: String
+    Description: Name for the ArgoCD capability
+    Default: "argocd-capability"
+    MinLength: 1
+    MaxLength: 100
+  
+  RoleName:
+    Type: String
+    Description: Name for the IAM Capability Role
+    Default: "ArgoCDCapabilityRole"
+    MinLength: 1
+    MaxLength: 64
+  
+  IdentityCenterInstanceArn:
+    Type: String
+    Description: ARN of the AWS Identity Center instance (required for SSO)
+  
+  IdentityCenterRegion:
+    Type: String
+    Description: AWS region where Identity Center is deployed
+  
+  AdminUserId:
+    Type: String
+    Description: Identity Center User ID to grant ADMIN role in ArgoCD
+  
+  DeletePropagationPolicy:
+    Type: String
+    Description: Policy for handling resource deletion
+    Default: RETAIN
+    AllowedValues:
+      - RETAIN
+      - DELETE
+
+Resources:
+
+  # IAM Capability Role for ArgoCD
+  ArgoCDCapabilityRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Ref RoleName
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: capabilities.eks.amazonaws.com
+            Action:
+              - sts:AssumeRole
+              - sts:TagSession
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSSecretsManagerClientReadOnlyAccess
+
+
+  # EKS Capability for ArgoCD
+  ArgoCDCapability:
+    Type: AWS::EKS::Capability
+    Properties:
+      CapabilityName: !Ref CapabilityName
+      ClusterName: !Ref ClusterName
+      Type: ARGOCD
+      RoleArn: !GetAtt ArgoCDCapabilityRole.Arn
+      DeletePropagationPolicy: !Ref DeletePropagationPolicy
+      Configuration:
+        ArgoCd:
+          AwsIdc:
+            IdcInstanceArn: !Ref IdentityCenterInstanceArn
+            IdcRegion: !Ref IdentityCenterRegion
+          RbacRoleMappings:
+            - Identities:
+                - Id: !Ref AdminUserId
+                  Type: SSO_USER
+              Role: ADMIN
+
+  ArgoCDAccessEntry:
+  Type: AWS::EKS::AccessEntry
+  DependsOn: ArgoCDCapability
+  Properties:
+    ClusterName: !Ref ClusterName
+    PrincipalArn: !GetAtt ArgoCDCapabilityRole.Arn
+    Type: STANDARD
+    AccessPolicies:
+      - PolicyArn: arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy
+        AccessScope:
+          Type: cluster
