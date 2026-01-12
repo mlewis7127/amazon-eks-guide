@@ -74,8 +74,18 @@ This should return the following:
 
 This tells us that the cluster has Auto Mode enabled and is using the default `general-purpose` node pool. From a Storage perspective, it tells us that the cluster can provision EBS volumes, without any need to manually install and manage the EBS CSI driver. From a Network perspective, it tells us the internal CIDR range for the cluster (which is separate from the VPC CIDR range), and it shows that load balancing is enabled.
 
-## Understanding the general-purpose node pool
-Amazon EKS node pools offer a flexible way to manage compute resources in your Kubernetes cluster. As already mentioned, Amazon EKS provides two built-in node pools - `system` and `general-purpose` - which you cannot modify, but you can enable or disable. With Karpenter's NodePool resource, you can define specific requirements for your compute resources, such as insance types and architectures.
+## Understanding the built-in node pool
+Amazon EKS node pools offer a flexible way to manage compute resources in your Kubernetes cluster. As already mentioned, Amazon EKS provides two built-in node pools - `system` and `general-purpose` - which you cannot modify, but you can enable or disable. 
+
+The `system` node pool has a `CriticalAddonsOnly` taint. Many EKS add-ons such as CoreDNS tolerate this taint. This node pool is used to separate cluster-critical applications.
+
+The `general-purpose` node pool provides support for launching nodes for general purpose workloads. It supports only `amd64` architecture. 
+
+Both built-in node pools:
+* Use the default EKS NodeClass
+* Use only on-demand EC2 capacity
+* Use the C, M, and R EC2 instance families
+* Require generation 5 or newer EC2 instances
 
 With our setup, we will be using the built-in `general-purpose` node pool. To see more details, we can run the following command:
 
@@ -94,7 +104,7 @@ Spec:
     Consolidation Policy:  WhenEmptyOrUnderutilized
 ```
 
-The `Template` section details the rules and lifecycle for every EC2 instance launched by Auto Mode in this node pool. `Expire After:  336h` means that nodes will be rotated after 336 hours (14 days). It tells Auto Mode to use the default NodeClass when launching instances. It then sets out the requirements which act as hard constrains. Only `on-demand` instance types are supported so no spot instances. EC2 instances are constrained to one of the following instance categories:
+The `Template` section details the rules and lifecycle for every EC2 instance launched by Auto Mode in this node pool. `Expire After:  336h` means that nodes will be rotated after 336 hours (14 days). It tells Auto Mode to use the default NodeClass when launching instances. It then sets out the requirements which act as hard constraints. Only `on-demand` instance types are supported so no spot instances. EC2 instances are constrained to one of the following instance categories:
 * c - compute optimised
 * m - general-purpose
 * r - memory-optimised
