@@ -374,7 +374,11 @@ aws eks associate-access-policy \
   --access-scope type=cluster
 ```
 
+Once we have run this command, Argo CD will now be able to connect successfully to the cluster:
+
 ![Argo CD Cluster Successful](../../static/img/argo-cd-cluster-successful.png)
+
+And the application can be synced and is healthy.
 
 ![Argo CD Application Healthy](../../static/img/argo-cd-application-healthy.png)
 
