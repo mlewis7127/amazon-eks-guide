@@ -33,8 +33,8 @@ export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      title="Amazon EKS Guide"
+      description="A beginners guide to Amazon EKS - Learn how to deploy and manage Kubernetes clusters on AWS">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
