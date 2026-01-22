@@ -237,15 +237,15 @@ Once the capability has been created (which will take a while), the capabilities
 
 We can click on the link to open up the managed Argo UI. At this point, we will need to click the button to `LOG IN VIA SSO`.
 
-![Argo API Endpoint](../../static/img/ArgoUISplashpage.png)
+![Argo UI Home Page](../../static/img/ArgoUISplashpage.png)
 
 In most cases, this will automatically log you directly into the console. At this point, we can see there are no applications currently available.
 
-![Argo API Endpoint](../../static/img/ArgoUILoginSuccessful.png)
+![Argo UI Login Successful](../../static/img/ArgoUILoginSuccessful.png)
 
 We can also check the Argo CD Role Based Access Control (RCAC) assignments in the console, and make sure that it matches what we set up in the previous JSON file or in the CloudFormation template.
 
-![Argo API Endpoint](../../static/img/ArgoRBACRoles.png)
+![Argo RBAC Assignments](../../static/img/ArgoRBACRoles.png)
 
 ## Argo CD Capability
 
