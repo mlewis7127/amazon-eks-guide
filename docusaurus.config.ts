@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'Amazon EKS Guide',
+  title: 'Amazon EKS  - Getting Started Guide',
   tagline: 'A beginners guide to Amazon EKS',
   favicon: 'img/favicon.ico',
 
@@ -51,14 +51,14 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: 'img/amazon-eks.svg',
+    image: 'img/eks-guide-social-card.jpg',
     colorMode: {
       respectPrefersColorScheme: true,
     },
     navbar: {
       title: 'EKS Guide',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'EKS Guide Logo',
         src: 'img/favicon.ico',
       },
       items: [
