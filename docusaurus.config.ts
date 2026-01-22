@@ -51,7 +51,7 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: 'img/eks-guide-social-card.jpg',
+    image: 'img/eks-guide-social-card.png',
     colorMode: {
       respectPrefersColorScheme: true,
     },
