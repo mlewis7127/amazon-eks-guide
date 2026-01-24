@@ -16,6 +16,8 @@ This guide provides an introduction to Amazon EKS. This page curates a list of r
 
 - [Best practices for streamlining Amazon EKS observability](https://docs.aws.amazon.com/prescriptive-guidance/latest/amazon-eks-observability-best-practices/introduction.html) - This guide is designed to help organizations optimize their Amazon EKS observability.
 
+- [Platform Engineering on Amazon EKS](https://github.com/aws-samples/appmod-blueprints/tree/main) - This repository implements a complete platform engineering solution on Amazon EKS, enabling organizations to modernize applications and adopt cloud-native practices. It provides a production-ready platform with integrated developer portals, GitOps workflows, and progressive delivery capabilities.
+
 
 ## 📝 Amazon EKS Blog Posts
 
@@ -29,6 +31,8 @@ This guide provides an introduction to Amazon EKS. This page curates a list of r
 - [Amazon EKS Workshop](https://www.eksworkshop.com/) - Practical exercises to learn about Amazon Elastic Kubernetes Service.
 
 - [Self Hosted EKS Workshops](https://workshops.aws/card/EKS) - This takes you to the current set of workshops created by teams at AWS on various different aspects of Amazon EKS
+
+- [Accelerate Platform Engineering on Amazon EKS](https://catalog.workshops.aws/platform-engineering-on-eks/en-US) - Get ready to supercharge your skills with Platform Engineering on Amazon EKS to build your Internal Developer Platform (IDP).
 
 
 ## 📺 Amazon EKS Videos
